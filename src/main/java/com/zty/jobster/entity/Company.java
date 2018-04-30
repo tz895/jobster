@@ -1,15 +1,26 @@
 package com.zty.jobster.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "company")
-public class Company {
+public class Company implements Serializable{
+
+
+    private static final long serialVersionUID = -2999576053384540956L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "cid")
     private int companyId;
+
+    @OneToMany(mappedBy = "company",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Job> jobList;
 
     @Column(name = "username")
     private String username;
@@ -72,5 +83,13 @@ public class Company {
 
     public void setIndustry(String industry) {
         this.industry = industry;
+    }
+
+    public List<Job> getJobList() {
+        return jobList;
+    }
+
+    public void setJobList(List<Job> jobList) {
+        this.jobList = jobList;
     }
 }
