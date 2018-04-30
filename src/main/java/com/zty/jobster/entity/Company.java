@@ -18,9 +18,14 @@ public class Company implements Serializable{
     @Column(name = "cid")
     private int companyId;
 
-    @OneToMany(mappedBy = "company",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Job> jobList;
+
+    @OneToMany(mappedBy = "pk.company",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<CompanySub> companySubList;
+
 
     @Column(name = "username")
     private String username;
@@ -91,5 +96,13 @@ public class Company implements Serializable{
 
     public void setJobList(List<Job> jobList) {
         this.jobList = jobList;
+    }
+
+    public List<CompanySub> getCompanySubList() {
+        return companySubList;
+    }
+
+    public void setCompanySubList(List<CompanySub> companySubList) {
+        this.companySubList = companySubList;
     }
 }

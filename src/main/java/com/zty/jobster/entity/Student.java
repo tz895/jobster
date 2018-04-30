@@ -1,9 +1,11 @@
 package com.zty.jobster.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zty.jobster.entity.Enum.StudentAccessType;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "student")
@@ -42,6 +44,30 @@ public class Student {
     @Enumerated(EnumType.STRING)
     @Column(name="saccess")
     private StudentAccessType access;
+
+    @OneToMany(mappedBy = "pk.student",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Jobapply> jobapplyList;
+
+    @OneToMany(mappedBy = "pk.student",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<CompanySub> companySubList;
+
+    public List<CompanySub> getCompanySubList() {
+        return companySubList;
+    }
+
+    public void setCompanySubList(List<CompanySub> companySubList) {
+        this.companySubList = companySubList;
+    }
+
+    public List<Jobapply> getJobapplyList() {
+        return jobapplyList;
+    }
+
+    public void setJobapplyList(List<Jobapply> jobapplyList) {
+        this.jobapplyList = jobapplyList;
+    }
 
     public int getStudentId() {
         return studentId;

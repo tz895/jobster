@@ -38,6 +38,7 @@ public class JobController {
 
     @PostMapping("/job")
     public ResponseEntity<Void> addJob(@RequestBody Job job, UriComponentsBuilder builder) {
+        jobService.addJob(job);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(builder.path("/company/{sid}").buildAndExpand(job.getJobId()).toUri());
         return new ResponseEntity<Void>(headers,HttpStatus.CREATED);

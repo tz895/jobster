@@ -6,6 +6,7 @@ import com.zty.jobster.entity.Enum.JobStatus;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "job")
@@ -21,7 +22,6 @@ public class Job implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "cid")
-    @JsonIgnore
     private Company company;
 
     @Column(name="jname")
@@ -55,8 +55,19 @@ public class Job implements Serializable{
     @Column(name="status")
     private JobStatus status;
 
+    @OneToMany(mappedBy = "pk.job",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Jobapply> jobapplyList;
     public int getJobId() {
         return jobId;
+    }
+
+    public List<Jobapply> getJobapplyList() {
+        return jobapplyList;
+    }
+
+    public void setJobapplyList(List<Jobapply> jobapplyList) {
+        this.jobapplyList = jobapplyList;
     }
 
     public void setJobId(int jobId) {
