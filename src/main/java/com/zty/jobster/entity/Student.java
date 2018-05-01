@@ -53,6 +53,18 @@ public class Student {
     @JsonIgnore
     private List<CompanySub> companySubList;
 
+    @OneToMany(mappedBy = "pk.student",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<CompanyPush> companyPushList;
+
+    public List<CompanyPush> getCompanyPushList() {
+        return companyPushList;
+    }
+
+    public void setCompanyPushList(List<CompanyPush> companyPushList) {
+        this.companyPushList = companyPushList;
+    }
+
     public List<CompanySub> getCompanySubList() {
         return companySubList;
     }

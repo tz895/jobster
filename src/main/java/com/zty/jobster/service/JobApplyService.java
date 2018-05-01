@@ -13,6 +13,6 @@ public interface JobApplyService {
     List<Jobapply> getApplyByJob(int jid);
     void addJobApply(Jobapply jobapply);
     void addJobapplyByPK(int sid,int jid);
-    void updateJobApply(Jobapply jobapply);
+    void updateJobApply(int sid,int jid,int status);
     void deleteJobApply(int sid,int jid);
 }

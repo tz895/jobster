@@ -18,7 +18,7 @@ public class JobApplyController {
     @Autowired
     private JobApplyService jobApplyService;
 
-    @GetMapping("/jobapply/student/{sid}/company/{jid}")
+    @GetMapping("/jobapply/student/{sid}/job/{jid}")
     public ResponseEntity<Jobapply> getJobApplyByPK(@PathVariable("sid") Integer sid,@PathVariable("jid") Integer jid) {
         Jobapply jobapply = jobApplyService.getApplyByPK(sid,jid);
         return new ResponseEntity<>(jobapply, HttpStatus.OK);
@@ -36,7 +36,7 @@ public class JobApplyController {
         return new ResponseEntity<>(jobapplyList,HttpStatus.OK);
     }
 
-    @GetMapping("/jobapply/company/{jid}")
+    @GetMapping("/jobapply/job/{jid}")
     public ResponseEntity<List<Jobapply>> getApplyByJob(@PathVariable("jid") Integer jid) {
         List<Jobapply> jobapplyList = jobApplyService.getApplyByJob(jid);
         return new ResponseEntity<>(jobapplyList,HttpStatus.OK);
@@ -46,27 +46,31 @@ public class JobApplyController {
     public ResponseEntity<Void> addJob(@RequestBody Jobapply jobapply, UriComponentsBuilder builder) {
         jobApplyService.addJobApply(jobapply);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/jobapply/{sid}/{cid}")
+        headers.setLocation(builder.path("/jobapply/student/{sid}/job/{jid}")
                 .buildAndExpand(jobapply.getPk().getStudent().getStudentId(),jobapply.getPk().getJob().getJobId()).toUri());
         return new ResponseEntity<>(headers,HttpStatus.CREATED);
     }
 
-    @PostMapping("/jobapply/student/{sid}/company/{jid}")
+    @PostMapping("/jobapply/student/{sid}/job/{jid}")
     public ResponseEntity<Void> addJobapplyByPK(@PathVariable("sid") Integer sid,@PathVariable("jid") Integer jid,UriComponentsBuilder builder) {
+        if(jobApplyService.getApplyByPK(sid,jid) != null) {
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
         jobApplyService.addJobapplyByPK(sid,jid);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/jobapply/{sid}/{cid}")
+        headers.setLocation(builder.path("/jobapply/student/{sid}/job/{jid}")
                 .buildAndExpand(sid,jid).toUri());
         return new ResponseEntity<>(headers,HttpStatus.CREATED);
     }
 
-    @PutMapping("/jobapply")
-    public ResponseEntity<Jobapply> updateJob(@RequestBody Jobapply jobapply) {
-        jobApplyService.updateJobApply(jobapply);
-        return new ResponseEntity<Jobapply>(jobapply,HttpStatus.OK);
+    @PutMapping("/jobapply/student/{sid}/job/{jid}/status/{status}")
+    public ResponseEntity<Void> updateJob(@PathVariable("sid") Integer sid,
+                                          @PathVariable("jid") Integer jid,@PathVariable("status") Integer status) {
+        jobApplyService.updateJobApply(sid,jid,status);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/jobapply/student/{sid}/company/{jid}")
+    @DeleteMapping("/jobapply/student/{sid}/job/{jid}")
     public ResponseEntity<Void> deleteJob(@PathVariable("sid") Integer sid,@PathVariable("jid") Integer jid) {
         jobApplyService.deleteJobApply(sid,jid);
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);

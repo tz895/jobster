@@ -52,7 +52,17 @@ public class JobApplyServiceImpl implements JobApplyService{
     }
 
     @Override
-    public void updateJobApply(Jobapply jobapply) {
+    public void updateJobApply(int sid,int jid,int status) {
+        Jobapply jobapply = this.getApplyByPK(sid,jid);
+        if(status == 1) {
+            jobapply.setStatus(JobApplyStatus.Checked);
+        }
+        else if(status == 0) {
+            jobapply.setStatus(JobApplyStatus.Processing);
+        }
+        else {
+            jobapply.setStatus(JobApplyStatus.Declined);
+        }
         jobApplyDao.updateJobApply(jobapply);
     }
 

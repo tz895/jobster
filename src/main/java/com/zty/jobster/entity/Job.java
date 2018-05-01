@@ -58,6 +58,19 @@ public class Job implements Serializable{
     @OneToMany(mappedBy = "pk.job",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Jobapply> jobapplyList;
+
+    @OneToMany(mappedBy = "pk.job",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<CompanyPush> companyPushList;
+
+    public List<CompanyPush> getCompanyPushList() {
+        return companyPushList;
+    }
+
+    public void setCompanyPushList(List<CompanyPush> companyPushList) {
+        this.companyPushList = companyPushList;
+    }
+
     public int getJobId() {
         return jobId;
     }

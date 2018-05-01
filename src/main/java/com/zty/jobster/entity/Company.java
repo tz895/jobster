@@ -105,4 +105,5 @@ public class Company implements Serializable{
     public void setCompanySubList(List<CompanySub> companySubList) {
         this.companySubList = companySubList;
     }
+
 }
