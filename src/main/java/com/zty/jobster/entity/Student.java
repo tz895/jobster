@@ -57,6 +57,54 @@ public class Student {
     @JsonIgnore
     private List<CompanyPush> companyPushList;
 
+    @OneToMany(mappedBy = "pk.sender",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<FriendRequest> senderRequests;
+
+    @OneToMany(mappedBy = "pk.receiver",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<FriendRequest> receiverRequests;
+
+    @OneToMany(mappedBy = "pk.sender",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<JobForward> senderjobForwards;
+
+    @OneToMany(mappedBy = "pk.receiver",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<JobForward> receiverjobForwards;
+
+    public List<JobForward> getSenderjobForwards() {
+        return senderjobForwards;
+    }
+
+    public void setSenderjobForwards(List<JobForward> senderjobForwards) {
+        this.senderjobForwards = senderjobForwards;
+    }
+
+    public List<JobForward> getReceiverjobForwards() {
+        return receiverjobForwards;
+    }
+
+    public void setReceiverjobForwards(List<JobForward> receiverjobForwards) {
+        this.receiverjobForwards = receiverjobForwards;
+    }
+
+    public List<FriendRequest> getSenderRequests() {
+        return senderRequests;
+    }
+
+    public void setSenderRequests(List<FriendRequest> senderRequests) {
+        this.senderRequests = senderRequests;
+    }
+
+    public List<FriendRequest> getReceiverRequests() {
+        return receiverRequests;
+    }
+
+    public void setReceiverRequests(List<FriendRequest> receiverRequests) {
+        this.receiverRequests = receiverRequests;
+    }
+
     public List<CompanyPush> getCompanyPushList() {
         return companyPushList;
     }

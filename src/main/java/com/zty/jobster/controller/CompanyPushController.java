@@ -63,7 +63,7 @@ public class CompanyPushController {
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/companypush/student/{sid}/jid/{jid}/status/{status}")
+    @PutMapping("/companypush/student/{sid}/job/{jid}/status/{status}")
     public ResponseEntity<Void> updateJob(@PathVariable("sid") Integer sid,
                                                  @PathVariable("jid") Integer jid, @PathVariable("status") int status) {
         companyPushService.updatePush(sid,jid,status);
