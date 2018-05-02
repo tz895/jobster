@@ -1,6 +1,7 @@
 package com.zty.jobster.dao;
 
 import com.zty.jobster.entity.Company;
+import com.zty.jobster.entity.Student;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface CompanyDao {
     void updateCompany(Company company);
     void deleteCompany(int sid);
     boolean usernameExists(String username, String name);
+    Company getCompanyByusername(String username);
 }

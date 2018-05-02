@@ -11,4 +11,5 @@ public interface StudentDao {
     void updateStudent(Student stduent);
     void deleteStudent(int sid);
     boolean usernameExists(String username);
+    Student getSutdentByusername(String username);
 }

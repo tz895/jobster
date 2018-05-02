@@ -54,4 +54,12 @@ public class CompanyDaoImpl implements CompanyDao{
 
         return count > 0 ? true : false;
     }
+
+    @Override
+    public Company getCompanyByusername(String username) {
+        String hql = "FROM Company as c WHERE c.username = ?";
+        List<Company> companyList= (List<Company>)entityManager.createQuery(hql).setParameter(0,username).getResultList();
+
+        return companyList.size() == 0 ? null : companyList.get(0);
+    }
 }

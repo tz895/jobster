@@ -4,9 +4,13 @@ import com.zty.jobster.dao.CompanyDao;
 import com.zty.jobster.entity.Company;
 import com.zty.jobster.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static java.util.Collections.emptyList;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -43,5 +47,14 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void deleteCompany(int sid) {
         companyDao.deleteCompany(sid);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        Company company = companyDao.getCompanyByusername(username);
+        if(company == null){
+            return null;
+        }
+        return new org.springframework.security.core.userdetails.User(company.getUsername(), company.getPassword(), emptyList());
     }
 }

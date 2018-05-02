@@ -59,4 +59,12 @@ public class StudentDaoImpl implements StudentDao{
 
         return count > 0 ? true : false;
     }
+
+    @Override
+    public Student getSutdentByusername(String username) {
+        String hql = "FROM Student as s WHERE s.username = ?";
+        List<Student> studentList= (List<Student>)entityManager.createQuery(hql).setParameter(0,username).getResultList();
+
+        return studentList.size() == 0 ? null : studentList.get(0);
+    }
 }

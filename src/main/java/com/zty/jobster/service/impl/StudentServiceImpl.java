@@ -5,12 +5,17 @@ import com.zty.jobster.dao.StudentDao;
 import com.zty.jobster.entity.Student;
 import com.zty.jobster.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.Collections.emptyList;
+
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private StudentDao studentDao;
@@ -45,5 +50,14 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public void deleteStudent(int sid) {
         studentDao.deleteStudent(sid);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Student student = studentDao.getSutdentByusername(username);
+        if(student == null){
+            return null;
+        }
+        return new org.springframework.security.core.userdetails.User(student.getUsername(), student.getPassword(), emptyList());
     }
 }
