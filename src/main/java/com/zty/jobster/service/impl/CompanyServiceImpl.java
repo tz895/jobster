@@ -1,6 +1,7 @@
 package com.zty.jobster.service.impl;
 
 import com.zty.jobster.dao.CompanyDao;
+import com.zty.jobster.dao.StudentDao;
 import com.zty.jobster.entity.Company;
 import com.zty.jobster.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private CompanyDao companyDao;
 
+    @Autowired
+    private StudentDao studentDao;
+
     @Override
     public List<Company> getAllCompanies() {
         return companyDao.getAllCompanies();
@@ -30,7 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public boolean addCompany(Company company) {
-        if(companyDao.usernameExists(company.getUsername(),company.getName())) {
+        if(companyDao.usernameExists(company.getUsername(),company.getName()) || studentDao.usernameExists(company.getUsername())) {
             return false;
         }
         else {
@@ -56,5 +60,10 @@ public class CompanyServiceImpl implements CompanyService {
             return null;
         }
         return new org.springframework.security.core.userdetails.User(company.getUsername(), company.getPassword(), emptyList());
+    }
+
+    @Override
+    public Company getStudentByUsername(String username) {
+        return companyDao.getCompanyByusername(username);
     }
 }

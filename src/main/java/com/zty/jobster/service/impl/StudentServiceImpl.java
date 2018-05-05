@@ -1,6 +1,7 @@
 package com.zty.jobster.service.impl;
 
 
+import com.zty.jobster.dao.CompanyDao;
 import com.zty.jobster.dao.StudentDao;
 import com.zty.jobster.entity.Student;
 import com.zty.jobster.service.StudentService;
@@ -20,6 +21,9 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentDao studentDao;
 
+    @Autowired
+    private CompanyDao companyDao;
+
     @Override
     public List<Student> getAllStudents() {
         return studentDao.getAllStudents();
@@ -33,7 +37,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public synchronized boolean addStudent(Student student) {
-        if(studentDao.usernameExists(student.getUsername())) {
+        if(studentDao.usernameExists(student.getUsername()) || companyDao.usernameExists(student.getUsername(),"***")) {
             return false;
         }
         else {
@@ -59,5 +63,10 @@ public class StudentServiceImpl implements StudentService {
             return null;
         }
         return new org.springframework.security.core.userdetails.User(student.getUsername(), student.getPassword(), emptyList());
+    }
+
+    @Override
+    public Student getStudentByUsername(String username) {
+        return studentDao.getSutdentByusername(username);
     }
 }

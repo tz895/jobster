@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -30,8 +31,15 @@ public class CompanyController {
         return new ResponseEntity<List<Company>>(companyList,HttpStatus.OK);
     }
 
+    @GetMapping("/company/username/{username}")
+    public ResponseEntity<Company> getStudentByUsername(@PathVariable("username") String username) {
+        Company student = companyService.getStudentByUsername(username);
+        return new ResponseEntity<Company>(student,HttpStatus.OK);
+    }
+
     @PostMapping("/company")
     public ResponseEntity<Void> addCompany(@RequestBody Company company, UriComponentsBuilder builder) {
+        company.setPassword(DigestUtils.md5DigestAsHex((company.getPassword()).getBytes()));
         boolean flag = companyService.addCompany(company);
         if(!flag) {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);

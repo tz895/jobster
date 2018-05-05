@@ -8,6 +8,7 @@ import java.util.List;
 public interface StudentService {
     List<Student> getAllStudents();
     Student getStudentById(int sid);
+    Student getStudentByUsername(String username);
     boolean addStudent(Student student);
     void updateStudent(Student stduent);
     void deleteStudent(int sid);
