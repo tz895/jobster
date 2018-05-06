@@ -20,9 +20,9 @@ public class RestConfig {
         config.addExposedHeader("Authorization");
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
+        config.addAllowedMethod("POST");
         config.addAllowedMethod("GET");
         config.addAllowedMethod("PUT");
-        config.addAllowedMethod("POST");
         config.addAllowedMethod("DELETE");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);

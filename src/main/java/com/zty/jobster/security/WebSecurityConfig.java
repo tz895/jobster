@@ -54,6 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/users/signup").permitAll()
                 .antMatchers(HttpMethod.POST, "/rest/student").permitAll()
                 .antMatchers(HttpMethod.POST, "/rest/company").permitAll()
+//                .antMatchers(HttpMethod.POST, "/rest/jobapply/**").permitAll()
 //                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .anyRequest().authenticated()  // 所有请求需要身份认证
                 .and()
