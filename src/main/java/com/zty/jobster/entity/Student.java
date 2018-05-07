@@ -73,6 +73,22 @@ public class Student {
     @JsonIgnore
     private List<JobForward> receiverjobForwards;
 
+    @OneToMany(mappedBy = "pk.student",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<FriendRelation> friendRelationList;
+
+    @OneToMany(mappedBy = "pk.friend",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<FriendRelation> friendRelations;
+
+    public List<FriendRelation> getFriendRelationList() {
+        return friendRelationList;
+    }
+
+    public void setFriendRelationList(List<FriendRelation> friendRelationList) {
+        this.friendRelationList = friendRelationList;
+    }
+
     public List<JobForward> getSenderjobForwards() {
         return senderjobForwards;
     }
