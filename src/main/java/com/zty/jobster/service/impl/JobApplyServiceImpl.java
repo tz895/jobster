@@ -1,18 +1,18 @@
 package com.zty.jobster.service.impl;
 
 
+import com.zty.jobster.dao.CompanyDao;
 import com.zty.jobster.dao.JobApplyDao;
 import com.zty.jobster.dao.JobDao;
 import com.zty.jobster.dao.StudentDao;
 
+import com.zty.jobster.entity.*;
 import com.zty.jobster.entity.Enum.JobApplyStatus;
-import com.zty.jobster.entity.Jobapply;
-import com.zty.jobster.entity.JobapplyId;
-import com.zty.jobster.entity.Student;
 import com.zty.jobster.service.JobApplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.zty.jobster.entity.Enum.JobApplyStatus.Processing;
@@ -25,6 +25,9 @@ public class JobApplyServiceImpl implements JobApplyService{
     private StudentDao studentDao;
     @Autowired
     private JobDao jobDao;
+
+    @Autowired
+    CompanyDao companyDao;
 
     @Override
     public List<Jobapply> getAllApply() {
@@ -39,6 +42,17 @@ public class JobApplyServiceImpl implements JobApplyService{
     @Override
     public List<Jobapply> getApplyByStudent(int sid) {
         return jobApplyDao.getApplyByStudent(studentDao.getStudentById(sid));
+    }
+
+    @Override
+    public List<Jobapply> getApplyByCompany(int cid) {
+        Company company = companyDao.getCompanyById(cid);
+        List<Job> jobs = jobDao.getJobsByCompany(company);
+        List<Jobapply> temp = new ArrayList<>();
+        for(Job job: jobs) {
+            temp.addAll(jobApplyDao.getApplyByJob(job));
+        }
+        return temp;
     }
 
     @Override

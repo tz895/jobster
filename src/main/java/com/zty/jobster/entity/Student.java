@@ -81,6 +81,30 @@ public class Student {
     @JsonIgnore
     private List<FriendRelation> friendRelations;
 
+    @OneToMany(mappedBy = "pk.sender",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<PostMessage> senderMessageList;
+
+    @OneToMany(mappedBy = "pk.receiver",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<PostMessage> receiverMessageList;
+
+    public List<PostMessage> getSenderMessageList() {
+        return senderMessageList;
+    }
+
+    public void setSenderMessageList(List<PostMessage> senderMessageList) {
+        this.senderMessageList = senderMessageList;
+    }
+
+    public List<PostMessage> getReceiverMessageList() {
+        return receiverMessageList;
+    }
+
+    public void setReceiverMessageList(List<PostMessage> receiverMessageList) {
+        this.receiverMessageList = receiverMessageList;
+    }
+
     public List<FriendRelation> getFriendRelationList() {
         return friendRelationList;
     }

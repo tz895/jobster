@@ -42,6 +42,12 @@ public class JobApplyController {
         return new ResponseEntity<>(jobapplyList,HttpStatus.OK);
     }
 
+    @GetMapping("/jobapply/company/{cid}")
+    public ResponseEntity<List<Jobapply>> getApplyByCompany(@PathVariable("cid") Integer cid) {
+        List<Jobapply> jobapplyList = jobApplyService.getApplyByCompany(cid);
+        return new ResponseEntity<>(jobapplyList,HttpStatus.OK);
+    }
+
     @PostMapping("/jobapply")
     public ResponseEntity<Void> addJob(@RequestBody Jobapply jobapply, UriComponentsBuilder builder) {
         jobApplyService.addJobApply(jobapply);

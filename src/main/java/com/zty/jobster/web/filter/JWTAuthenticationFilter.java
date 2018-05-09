@@ -58,20 +58,20 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                     return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
                 }
             } catch (ExpiredJwtException e) {
-                logger.error("Token已过期: {} " + e);
-                throw new TokenException("Token已过期");
+                logger.error("Token Expired: {} " + e);
+                throw new TokenException("Token Expired");
             } catch (UnsupportedJwtException e) {
-                logger.error("Token格式错误: {} " + e);
-                throw new TokenException("Token格式错误");
+                logger.error("Token Unsupported: {} " + e);
+                throw new TokenException("Token Unsupported");
             } catch (MalformedJwtException e) {
-                logger.error("Token没有被正确构造: {} " + e);
-                throw new TokenException("Token没有被正确构造");
+                logger.error("Token Malformed: {} " + e);
+                throw new TokenException("Token Malformed");
             } catch (JwtException e) {
-                logger.error("签名失败: {} " + e);
-                throw new TokenException("签名失败");
+                logger.error("Signature Failed: {} " + e);
+                throw new TokenException("Signature Failed");
             } catch (IllegalArgumentException e) {
-                logger.error("非法参数异常: {} " + e);
-                throw new TokenException("非法参数异常");
+                logger.error("Illegal Argument: {} " + e);
+                throw new TokenException("Illegal Argument");
             }
         }
         return null;

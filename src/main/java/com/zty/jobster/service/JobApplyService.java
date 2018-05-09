@@ -11,6 +11,7 @@ public interface JobApplyService {
     Jobapply getApplyByPK(int sid, int jid);
     List<Jobapply> getApplyByStudent(int sid);
     List<Jobapply> getApplyByJob(int jid);
+    List<Jobapply> getApplyByCompany(int cid);
     void addJobApply(Jobapply jobapply);
     void addJobapplyByPK(int sid,int jid);
     void updateJobApply(int sid,int jid,int status);
